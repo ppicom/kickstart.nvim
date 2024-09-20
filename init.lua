@@ -607,6 +607,7 @@ require('lazy').setup({
       local servers = {
         -- clangd = {},
         gopls = {},
+        elixirls = {},
         -- pyright = {},
         -- rust_analyzer = {},
         -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
@@ -700,6 +701,7 @@ require('lazy').setup({
       formatters_by_ft = {
         go = { 'goimports', 'gofumpt' },
         lua = { 'stylua' },
+        elixir = { 'credo' },
         -- Conform can also run multiple formatters sequentially
         -- python = { "isort", "black" },
         --
@@ -831,6 +833,7 @@ require('lazy').setup({
       events = { 'BufWritePost', 'BufReadPost', 'InsertLeave' },
       linters_by_ft = {
         go = { 'golangcilint' },
+        elixir = { 'credo' },
         -- Use the "*" filetype to run linters on all filetypes.
         -- ['*'] = { 'global linter' },
         -- Use the "_" filetype to run linters on filetypes that don't have other linters configured.
@@ -841,6 +844,11 @@ require('lazy').setup({
       -- or add custom linters.
       ---@type table<string,table>
       linters = {
+        credo = {
+          condition = function(ctx)
+            return vim.fs.find({ '.credo.exs' }, { path = ctx.filename, upward = true })[1]
+          end,
+        },
         -- -- Example of using selene only when a selene.toml file is present
         -- selene = {
         --   -- `condition` is another LazyVim extension that allows you to
@@ -989,6 +997,9 @@ require('lazy').setup({
         'bash',
         'c',
         'diff',
+        'elixir',
+        'heex',
+        'eex',
         'html',
         'lua',
         'luadoc',
